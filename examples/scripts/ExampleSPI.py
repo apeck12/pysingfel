@@ -14,7 +14,6 @@ import pysingfel as ps
 
 # Input files
 input_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../input')
-#input_dir='../input'
 beamfile=input_dir+'/beam/amo86615.beam'
 geom=input_dir+'/lcls/amo86615/PNCCD::CalibV1/Camp.0:pnCCD.1/geometry/0-end.data'
 pdbfile=input_dir+'/pdb/3iyf.pdb'

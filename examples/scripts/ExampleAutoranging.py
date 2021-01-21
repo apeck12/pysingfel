@@ -11,9 +11,10 @@ from pysingfel import *
 import pysingfel as ps
 from pysingfel.util import asnumpy, xp
 from pysingfel.build_autoranging_frames import BuildAutoRangeFrames
+import time, os
 
 # Input files
-input_dir='../input'
+input_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../input')
 beamfile=input_dir+'/beam/amo86615.beam'
 geom=input_dir+'/lcls/amo86615/PNCCD::CalibV1/Camp.0:pnCCD.1/geometry/0-end.data'
 pdbfile=input_dir+'/pdb/3iyf.pdb'

@@ -9,7 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import pysingfel as ps
 from pysingfel.particlePlacement import *
-import time
+import time, os
 
 def drawSphere(xCenter, yCenter, zCenter, r):
     u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
@@ -25,7 +25,7 @@ def drawSphere(xCenter, yCenter, zCenter, r):
 num = 5
 
 # Input files
-input_dir='../input'
+input_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../input')
 beamfile=input_dir+'/beam/amo86615.beam'
 geom=input_dir+'/lcls/amo86615/PNCCD::CalibV1/Camp.0:pnCCD.1/geometry/0-end.data'
 pdbfile=input_dir+'/pdb/3iyf.pdb'
