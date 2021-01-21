@@ -9,6 +9,7 @@ from scipy import stats
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 import pysingfel as ps
+import time
 
 # Input files
 input_dir='../input'
@@ -28,11 +29,10 @@ print('AFTER : # of photons per pulse = {}'.format(beam.get_photons_per_pulse())
 # Load and initialize the detector
 det = ps.PnccdDetector(geom=geom, beam=beam)
 increase_factor = 0.5
-print('BEFORE: detector distance = {} m'.format(np.abs(det.distance)))
+print('BEFORE: detector distance = {} m'.format(det.distance))
 print('>>> Increasing the detector distance by a factor of {}'.format(increase_factor))
-det.distance = increase_factor*np.abs(det.distance)
+det.distance = increase_factor*det.distance
 print('AFTER : detector distance = {} m'.format(det.distance))
-#det.distance = 0.25 # reset detector distance for desired resolution
 
 # Create particle object(s)
 particle = ps.Particle()
@@ -41,9 +41,12 @@ particle_2 = ps.Particle()
 particle_2.read_pdb(pdbfile2, ff='WK')
 
 # Perform Holography experiment
+tic = time.time()
 experiment = ps.HOLOExperiment(det, beam, [particle], [particle_2])
+toc = time.time()
+print(">>> It took {:.2f} seconds to finish Holography calculation.".format(toc-tic))
 
-# Visaulization
+# Visualization
 viz = ps.Visualizer(experiment, diffraction_rings="auto", log_scale=True)
 img = experiment.generate_image()
 viz.imshow(img)

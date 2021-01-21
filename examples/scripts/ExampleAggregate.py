@@ -46,12 +46,10 @@ print('focus area = {}'.format(beam._focus_area))
 # Load and initialize the detector
 det = ps.PnccdDetector(geom=geom, beam=beam)
 increase_factor = 0.5
-print('BEFORE: detector distance = {} m'.format(np.abs(det.distance)))
+print('BEFORE: detector distance = {} m'.format(det.distance))
 print('>>> Increasing the detector distance by a factor of {}'.format(increase_factor))
-det.distance = increase_factor*np.abs(det.distance)
+det.distance = increase_factor*det.distance
 print('AFTER : detector distance = {} m'.format(det.distance))
-#det.distance = 0.3 # reset detector distance for desired resolution
-# Note: psana geometry used to be in psana coordinates and got changed to lab coordinates, add absolute value to make sure the detector distance is positive
 
 # Create particle object(s)
 particle = ps.Particle()
@@ -67,7 +65,7 @@ viz = ps.Visualizer(experiment, diffraction_rings="auto", log_scale=True)
 viz.imshow(img)
 plt.show()
 
-# Visalize particle sticking
+# Visualize particle sticking
 particle_group = experiment.generate_new_sample_state()
 part_positions = particle_group[0][0]
 radius = max_radius({particle: num})
@@ -86,7 +84,11 @@ r = np.ones(num)*radius
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
-ax.set_aspect('equal')
+try: 
+    ax.set_aspect('equal') # not implemented for all matplotlib versions
+except:
+    ax.set_aspect('auto')
+
 for (xi,yi,zi,ri) in zip(x,y,z,r):
     (xs,ys,zs) = drawSphere(xi,yi,zi,ri)
     ax.plot_wireframe(xs, ys, zs)

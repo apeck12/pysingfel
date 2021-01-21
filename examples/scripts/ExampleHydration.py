@@ -10,8 +10,6 @@ from matplotlib.colors import LogNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import h5py as h5
 import time
-import sys
-sys.path.append('/cds/home/i/iris/pysingfel')
 import pysingfel as ps
 
 # Input files
@@ -32,12 +30,10 @@ print('photon energy = {} eV'.format(beam.photon_energy))
 # Load and initialize the detector
 det = ps.PnccdDetector(geom=geom, beam=beam)
 increase_factor = 0.5
-print('BEFORE: detector distance = {} m'.format(np.abs(det.distance)))
+print('BEFORE: detector distance = {} m'.format(det.distance))
 print('>>> Increasing the detector distance by a factor of {}'.format(increase_factor))
-det.distance = increase_factor*np.abs(det.distance)
+det.distance = increase_factor*det.distance
 print('AFTER : detector distance = {} m'.format(det.distance))
-#det.distance = 0.3 # reset detector distance for desired resolution
-# Note: psana geometry used to be in psana coordinates and got changed to lab coordinates, add absolute value to make sure the detector distance is positive
 
 # Create particle object(s)
 particle = ps.Particle()
